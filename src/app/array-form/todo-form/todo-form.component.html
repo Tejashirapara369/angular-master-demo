@@ -1,0 +1,39 @@
+<div class="form-group">
+  <form [formGroup]="todoListForm">
+
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="userName">Enter Name</label>
+                <input class="form-control" type="text" id="userName" formControlName="name">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <button class="btn btn-primary" (click)="addNewControl()" [disabled]="todoListForm.invalid">+ Add Task</button>
+    <div class="row">
+      <div class="col-md-6">Task Name</div>
+      <div class="col-md-2">Priority</div>
+      <div class="col-md-3">Time</div>
+    </div>
+
+    <div class="row" formArrayName="tasks">
+        <ng-container *ngFor="let control of formArray.controls; let i = index" [formGroupName]="i">
+                <div class="col-md-6">
+                  <input type="text" class="form-control" formControlName="name"/>
+                </div>
+                <div class="col-md-2">
+                  <input type="number" min="0" class="form-control" formControlName="priority"/>
+                </div>
+                <div class="col-md-3">
+                  <input type="time" class="form-control" formControlName="time"/>
+                </div>
+                <div class="col-md-1 mb-2">
+                  <button class="btn btn-danger" (click)="removeControl(i)" [disabled]="formArray.controls.length < 2"> X </button> 
+                </div>
+        </ng-container>
+        <hr>
+        <button class="btn btn-success my-3" (click)="saveTodoList()" [disabled]="todoListForm.invalid">{{ editMode ? 'Update ':'Save ' }}Info</button>
+    </div>
+  </form>
+</div>
