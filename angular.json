@@ -103,5 +103,7 @@
       }
     }
   },
-  "defaultProject": "array-form-demo"
+  "cli": {
+    "analytics": false
+  }
 }

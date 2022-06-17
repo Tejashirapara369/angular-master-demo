@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../todo.interface';
 import { TodoService } from '../todo.service';
@@ -15,7 +15,7 @@ export class TodoFormComponent implements OnInit {
   selectedUser: User | undefined;
 
   constructor(
-    private readonly fb: FormBuilder,
+    private readonly fb: UntypedFormBuilder,
     private readonly todoService: TodoService,
     private readonly route: ActivatedRoute) {
     this.route.params.subscribe(({ id }) => {
@@ -29,13 +29,13 @@ export class TodoFormComponent implements OnInit {
     })
   }
 
-  todoListForm: FormGroup = this.fb.group({
+  todoListForm: UntypedFormGroup = this.fb.group({
     name: ['', Validators.required],
     tasks: this.fb.array([])
   })
 
-  get formArray(): FormArray {
-    return this.todoListForm.get('tasks') as FormArray;
+  get formArray(): UntypedFormArray {
+    return this.todoListForm.get('tasks') as UntypedFormArray;
   }
 
   ngOnInit(): void {
