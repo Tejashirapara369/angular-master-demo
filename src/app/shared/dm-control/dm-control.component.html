@@ -1,0 +1,86 @@
+<div [formGroup]="form" [ngSwitch]="true">
+    <ng-container *ngSwitchCase="fieldObj.controlType === 'radio'">
+      <div class="form-check" *ngFor="let g of fieldObj.options">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="gender"
+          [value]="g"
+          [formControlName]="key"
+        />
+        <label class="form-check-label" [for]="key">
+          {{ g }}
+        </label>
+      </div>
+    </ng-container>
+  
+    <div
+      class="dropdown"
+      *ngSwitchCase="fieldObj.controlType === 'dropdown'"
+    >
+      <button
+        class="btn btn-default dropdown-toggle"
+        type="button"
+        (click)="openDropdown = !openDropdown"
+      >
+        Dropdown button
+      </button>
+      <div class="dropdown-menu" [ngClass]="{show: openDropdown}" aria-labelledby="dropdownMenuButton">
+        <ng-container *ngFor="let el of fieldObj.options">
+          <a class="dropdown-item" (click)="onSelectDropdown(el.name)">{{ el.name }}</a>
+        </ng-container>
+      </div>
+    </div>
+  
+    <div class="form-group" *ngSwitchCase="fieldObj.controlType === 'textarea'">
+      <label [for]="key">{{ fieldObj.label }}</label>
+      <textarea
+        [name]="key"
+        [id]="key"
+        cols="30"
+        rows="3"
+        class="form-control"
+        [formControlName]="key"
+      ></textarea>
+      <div class="help-box" *ngIf="isInValid">
+        <p *ngIf="control && control.errors && control.errors['required']">Please enter Address.</p>
+      </div>
+    </div>
+  
+    <div class="form-group" *ngSwitchCase="fieldObj.controlType === 'fileUploader'">
+      <label for="exampleFormControlFile1">Example file input: </label>
+      <input type="file" class="form-control-file" id="exampleFormControlFile1" (change)="handleFileInput($event)">
+    </div>
+  
+    <div
+      class="form-group"
+      *ngSwitchCase="fieldObj.controlType === 'dateTimePicker'"
+    >
+      <label class="mr-3" [for]="key">{{ fieldObj.label }}:</label>
+      <!-- <ejs-datepicker
+        [placeholder]="fieldObj.placeholder || ''"
+        [value]="fieldObj.defaultValue || ''"
+        format="dd/MM/yyyy"
+      ></ejs-datepicker> -->
+
+      <ngx-datepicker [formControlName]="key" [options]="options"></ngx-datepicker>
+    </div>
+  
+    <div class="form-group" *ngSwitchDefault>
+      <label [for]="key">{{ fieldObj.label }}</label>
+      <input
+        [type]="fieldObj.controlType"
+        class="form-control"
+        [id]="key"
+        [formControlName]="key"
+        [placeholder]="fieldObj.placeholder || ''"
+        [autocomplete]="fieldObj.autofillOff ? 'off' : 'on'"
+      />
+      <div class="help-box" *ngIf="isInValid">
+        <p *ngIf="control && control.errors && control.errors['required']">{{ fieldObj.label }} is required!</p>
+        <p *ngIf="control && control.errors && control.errors['email']">Please enter valid email ID!</p>
+        <p *ngIf="control && control.errors && control.errors['pattern']">Please enter valid mobile number.</p>
+      </div>
+    </div>
+  </div>
+  

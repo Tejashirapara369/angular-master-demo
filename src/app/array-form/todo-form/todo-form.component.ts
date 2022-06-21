@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../todo.interface';
 import { TodoService } from '../todo.service';
 
@@ -17,9 +17,10 @@ export class TodoFormComponent implements OnInit {
   constructor(
     private readonly fb: UntypedFormBuilder,
     private readonly todoService: TodoService,
-    private readonly route: ActivatedRoute) {
+    private readonly route: ActivatedRoute,
+    private readonly router: Router) {
     this.route.params.subscribe(({ id }) => {
-      if (id > -1 && this.todoService.users[+id]) {
+      if (+id > -1 && this.todoService.users[+id]) {
         this.editMode = true;
         this.selectedUser = this.todoService.users[+id];
         this.formArray.controls = [];
@@ -57,7 +58,13 @@ export class TodoFormComponent implements OnInit {
   }
 
   saveTodoList() {
-    this.todoService.addUser(this.todoListForm.value);
+    if(this.editMode) {
+      const id: number = this.route.snapshot.params['id']
+      this.todoService.updateUserById(id, this.todoListForm.value);
+    } else {
+      this.todoService.addUser(this.todoListForm.value);
+    }
+    this.router.navigate(['../../'])
     this.todoListForm.reset();
   }
 

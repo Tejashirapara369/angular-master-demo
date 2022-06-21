@@ -13,4 +13,8 @@ export class TodoListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  deleteUser(i: number) {
+    this.todoService.users.splice(i, 1);
+  }
+
 }

@@ -33,6 +33,10 @@ export class TodoService {
         this.userList.push(user);
         console.log('this.userList ==>', this.userList)
     }
+    
+    updateUserById(i: number, user: User) {
+        this.userList[i] = user;
+    }
 
     removeRemove(index: number) {
         this.userList.splice(index, 1);

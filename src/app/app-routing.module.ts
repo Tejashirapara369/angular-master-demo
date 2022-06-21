@@ -5,6 +5,10 @@ const routes: Routes = [
   {
     path: '', 
     loadChildren: () => import('./array-form/array-form.module').then(m => m.ArrayFormModule)
+  },
+  {
+    path: 'dynamic-form', 
+    loadChildren: () => import('./dynamic-form/dynamic-form.module').then(m => m.DynamicFormModule)
   }
 ];
 

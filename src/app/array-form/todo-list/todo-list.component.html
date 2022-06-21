@@ -1,7 +1,13 @@
 <!-- <p>{{todoService.users | json}}</p> -->
 <div class="px-5">
   <ng-container *ngFor="let user of todoService.users; let i = index">
-    <h4>User name: {{ user.name }} <a href="javascript:void(0)" [routerLink]="['/edit', i]">Edit</a></h4>
+    <h5 class="mt-5">User name: {{ user.name }} 
+      <span class="float-end">
+        <a href="javascript:void(0)" class="mx-3" [routerLink]="['/edit', i]">Edit</a>
+        <a href="javascript:void(0)" (click)="deleteUser(i)">Delete</a>
+
+      </span>
+    </h5>
 
     <table class="table table-striped mb-3">
       <thead>
