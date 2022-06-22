@@ -92,7 +92,7 @@
             Add options value:
             <div class="row mb-3" *ngFor="let control of optionsArray.controls; let i = index" [formGroupName]="i">
                 <div class="col-md-2">
-                    <input type="text" class="form-control" formControlName="value" readonly>
+                    <input type="text" class="form-control" formControlName="value">
                 </div>
                 <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="text">
@@ -101,12 +101,12 @@
         </div>
         
         <div class="form-group">
-            Enter right answer {{ newQuestionForm.get('questionType')?.value === 'BRIEF' ? "(add keywords separate by commas)" : "(Accepted value: A/B/C/D)" }}:
+            Enter right answer {{ newQuestionForm.get('questionType')?.value === 'BRIEF' ? "(add keywords separated by commas)" : "(Accepted value: A/B/C/D)" }}:
             <input type="text" class="form-control" formControlName="rightAnswer">
         </div>
 
 
-        <button class="btn btn-success m-3" (click)="addQuestion()">Add question</button>
+        <button class="btn btn-success m-3" (click)="addQuestion()" [disabled]="newQuestionForm.invalid">Add question</button>
       </form>
     </div>
   </div>

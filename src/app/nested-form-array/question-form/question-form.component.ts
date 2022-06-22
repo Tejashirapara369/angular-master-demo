@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { createPasswordStrengthValidator } from 'src/app/shared/validators/mcq-valid-options.validator';
 
 @Component({
   selector: 'app-question-form',
@@ -68,17 +69,17 @@ export class QuestionFormComponent implements OnInit {
   ]
 
   optionsFormArray: FormArray = this.fb.array([
-    this.fb.group({ value: ['A'], text: ['', Validators.required] }),
-    this.fb.group({ value: ['B'], text: ['', Validators.required] }),
-    this.fb.group({ value: ['C'], text: ['', Validators.required] }),
-    this.fb.group({ value: ['D'], text: ['', Validators.required] }),
+    this.fb.group({ value: [{value:'A', disabled: true}], text: ['', Validators.required] }),
+    this.fb.group({ value: [{value:'B', disabled: true}], text: ['', Validators.required] }),
+    this.fb.group({ value: [{value:'C', disabled: true}], text: ['', Validators.required] }),
+    this.fb.group({ value: [{value:'D', disabled: true}], text: ['', Validators.required] }),
   ])
 
   newQuestionForm = this.fb.group({
     question: ['', Validators.required],
     questionType: ['MCQ'],
     options: this.optionsFormArray,
-    rightAnswer: ['', Validators.required]
+    rightAnswer: ['', [Validators.required, createPasswordStrengthValidator()]]
   })
 
   questionForm = this.fb.group({
@@ -99,11 +100,15 @@ export class QuestionFormComponent implements OnInit {
     this.questionList.forEach(quest => this.addQuestionControl());
 
     this.newQuestionForm.get('questionType')?.valueChanges.subscribe((value: any) => {
+      this.newQuestionForm.get('rightAnswer')?.clearValidators();
       if (value === 'MCQ') {
         this.newQuestionForm.addControl('options', this.optionsFormArray);
+        this.newQuestionForm.get('rightAnswer')?.addValidators(createPasswordStrengthValidator());
       } else {
         this.newQuestionForm.removeControl('options');
       }
+      this.newQuestionForm.get('rightAnswer')?.addValidators([Validators.required]);
+      this.newQuestionForm.get('rightAnswer')?.updateValueAndValidity();
     })
   }
 
@@ -120,7 +125,7 @@ export class QuestionFormComponent implements OnInit {
   // }
 
   addQuestion() {
-    const question = this.newQuestionForm.value;
+    const question = this.newQuestionForm.getRawValue();
     this.addQuestionControl();
     if (question.questionType === 'BRIEF') {
       question.rightAnswer = question.rightAnswer.split(',');
@@ -128,7 +133,7 @@ export class QuestionFormComponent implements OnInit {
     console.log('question ==>', question)
     this.questionList.push(question);
     this.newQuestionForm.reset({ questionType: 'MCQ' });
-    this.optionsFormArray.reset([{ value: 'A' }, { value: 'B' }, { value: 'C' }, { value: 'D' }]);
+    this.optionsFormArray.reset([{ value: 'A', text:'' }, { value: 'B', text:'' }, { value: 'C', text:'' }, { value: 'D', text:'' }]);
   }
 
   checkAnswer(index: number) {
