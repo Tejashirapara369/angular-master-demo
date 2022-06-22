@@ -41,7 +41,7 @@ const template_ref: any = {
         options: ['Male', 'Female']
     },
     dateTimePicker: {
-        label: 'Select Date & Time',
+        label: 'Select Date: ',
         controlType: 'dateTimePicker',
         defaultValue: new Date(),
         placeholder: 'DD/MM/YYYY',
@@ -58,6 +58,7 @@ const template_ref: any = {
         label: 'Current Address',
     },
     city: {
+        label: 'Select your city: ',
         controlType: 'dropdown',
         required: true,
         options: [
@@ -73,23 +74,5 @@ const template_ref: any = {
     }
 }
 
-const segment = {
-    userForm: {
-        fields: [
-            'name',
-            'mobile',
-            'gender',
-            'email',
-            'dateTimePicker',
-            'address',
-            'city',
-            'profileImg'
-        ]
-    },
-    signInForm: {
-        fields: ['email', 'password']
-    }
-}
-
-export { segment, template_ref }
+export { template_ref }
 

@@ -1,7 +1,7 @@
 import { AfterContentInit, AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { generateForm } from 'src/app/shared/form/form-generate';
-import * as formService from '../../shared/form/fields';
+import { segment } from '../user-form-fields';
 
 @Component({
   selector: 'app-user-form',
@@ -10,7 +10,7 @@ import * as formService from '../../shared/form/fields';
 })
 export class UserFormComponent implements OnInit, AfterContentInit, AfterViewChecked {
     public formGroup: FormGroup = new FormGroup({});
-    public form = formService.segment['userForm'].fields;
+    public form = segment['userForm'].fields;
     public showPopup: boolean = false;
     public userInfo: any;
     // public modalObj: PopupModal = {

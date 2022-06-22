@@ -11,3 +11,7 @@
 .control-section {
     margin: 25px auto;
 }
+
+.btn-light.dropdown-toggle {
+    min-width: 135px;
+}

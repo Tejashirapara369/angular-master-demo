@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'dynamic-form', 
     loadChildren: () => import('./dynamic-form/dynamic-form.module').then(m => m.DynamicFormModule)
+  },
+  {
+    path: 'question-form', 
+    loadChildren: () => import('./nested-form-array/nested-form-array.module').then(m => m.NestedFormArrayModule)
   }
 ];
 
