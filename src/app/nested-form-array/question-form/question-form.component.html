@@ -1,1 +1,113 @@
-<p>question-form works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <button
+        class="btn btn-light m-3"
+        (click)="showAddQuestionForm = !showAddQuestionForm"
+      >
+        Add new question
+      </button>
+      <form [formGroup]="questionForm">
+        <div
+          class="md-6"
+          formArrayName="questions"
+          *ngFor="let control of questionArray.controls; let i = index"
+        >
+          <div class="form-group" [formGroupName]="i">
+            <p class="pt-5 mb-0"> <strong>{{i + 1}})&nbsp;&nbsp;&nbsp;</strong> {{ questionList[i].question }}</p>
+            <div
+              class="mx-3"
+              *ngIf="questionList[i].questionType === 'MCQ'; else briefQuestion"
+            >
+              <div
+                class="form-check"
+                *ngFor="let option of questionList[i].options"
+              >
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [value]="option.value"
+                  formControlName="answer"
+                />
+                <label class="form-check-label">
+                  {{ option.text }}
+                </label>
+              </div>
+            </div>
+            <ng-template #briefQuestion>
+              <textarea
+                cols="30"
+                class="form-control"
+                rows="3"
+                formControlName="answer"
+              ></textarea>
+            </ng-template>
+            <p class="float-end" href="javascript:void(0)" (click)="checkAnswer(i)">
+                {{verifyAnswerIndex === i ? result : 'Verify your Answer'}}
+            </p>
+          </div>
+        </div>
+        <!-- <button class="btn btn-primary m-3" (click)="onSubmit()">
+          Click here
+        </button> -->
+      </form>
+    </div>
+
+    <div class="col-md-6 p-5" *ngIf="showAddQuestionForm">
+      <h3>Add new question</h3>
+      <form [formGroup]="newQuestionForm">
+        <div class="form-group mb-3">
+          <label for="newQuestion">Question</label>
+          <input
+            id="newQuestion"
+            type="text"
+            class="form-control"
+            formControlName="question"
+            placeholder="Please enter question here"
+          />
+        </div>
+        <div class="form-group mb-3">
+            Question type:
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="MCQ"
+              formControlName="questionType"
+            />
+            <label class="form-check-label"> MCQ type question </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="BRIEF"
+              formControlName="questionType"
+            />
+            <label class="form-check-label"> Descriptive question </label>
+          </div>
+        </div>
+
+        <div *ngIf="newQuestionForm.get('questionType')?.value === 'MCQ'" formArrayName="options">
+            Add options value:
+            <div class="row mb-3" *ngFor="let control of optionsArray.controls; let i = index" [formGroupName]="i">
+                <div class="col-md-2">
+                    <input type="text" class="form-control" formControlName="value" readonly>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" formControlName="text">
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            Enter right answer {{ newQuestionForm.get('questionType')?.value === 'BRIEF' ? "(add keywords separate by commas)" : "(Accepted value: A/B/C/D)" }}:
+            <input type="text" class="form-control" formControlName="rightAnswer">
+        </div>
+
+
+        <button class="btn btn-success m-3" (click)="addQuestion()">Add question</button>
+      </form>
+    </div>
+  </div>
+</div>
