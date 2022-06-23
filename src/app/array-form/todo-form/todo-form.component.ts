@@ -68,4 +68,7 @@ export class TodoFormComponent implements OnInit {
     this.todoListForm.reset();
   }
 
+  // log(){
+  //   console.log('this. ==>', this.todoListForm.value)
+  // }
 }

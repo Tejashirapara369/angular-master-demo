@@ -1,6 +1,6 @@
 <!-- <p>{{todoService.users | json}}</p> -->
 <div class="px-5">
-  <ng-container *ngFor="let user of todoService.users; let i = index">
+  <div *ngFor="let user of todoService.users; let i = index; trackBy:trackByItems" @fadeIn>
     <h5 class="mt-5">User name: {{ user.name }} 
       <span class="float-end">
         <a href="javascript:void(0)" class="mx-3" [routerLink]="['/edit', i]">Edit</a>
@@ -27,5 +27,5 @@
         </tr>
       </tbody>
     </table>
-  </ng-container>
+  </div>
 </div>

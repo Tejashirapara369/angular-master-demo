@@ -1,3 +1,6 @@
 .option-lable {
     margin: 0 50px 0 10px;
 }
+.verify-answer {
+    cursor: pointer;
+}

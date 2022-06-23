@@ -13,25 +13,7 @@ export class UserFormComponent implements OnInit, AfterContentInit, AfterViewChe
     public form = segment['userForm'].fields;
     public showPopup: boolean = false;
     public userInfo: any;
-    // public modalObj: PopupModal = {
-    //   header: 'Fill the form',
-    //   // content: 'here you can add content',
-    //   headerStyles: {
-    //     color: 'red',
-    //     fontWeight: 800,
-    //   },
-    //   // subHeader: 'Here you can add sub heading',
-    //   successBtn: true,
-    //   cancelBtn: true,
-    //   extraBtn:'click this btn',
-    //   successBtnStyles: {
-    //     color: 'red',
-    //     backgroundColor: 'yellow',
-    //     border: '2px solid black',
-    //   },
-    //   btnAlign: 'start',
-    // };
-  
+
     userList: any[] = [];
   
     constructor(
